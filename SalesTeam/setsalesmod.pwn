@@ -2,31 +2,31 @@ CMD:setsalesmod(playerid, params[]) {
 	if(PlayerInfo[playerid][pAdmin] < 4)
 		return SendClientMessage(playerid, COLOR_GREY, "You are not authorised to use this command.");
 		
-    if(AdminDuty[playerid] != 1 && PlayerInfo[playerid][pAdmin] < 5)
-        return SendClientMessage(playerid,COLOR_WHITE, "You're not on-duty as admin. To access your admin commands you must be on-duty. Type /aduty to go on-duty.");
+	if(AdminDuty[playerid] != 1 && PlayerInfo[playerid][pAdmin] < 5)
+		return SendClientMessage(playerid,COLOR_WHITE, "You're not on-duty as admin. To access your admin commands you must be on-duty. Type /aduty to go on-duty.");
 
 	new
 		iTargetID,
 		iSalesMod;
 		
 	if(sscanf(params, "ud", iTargetID, iSalesMod)) {
-	    SendClientMessage(playerid, COLOR_WHITE, "USAGE: /setsalesmod [playerid/partofname] [1 or 0]");
-	    return SendClientMessage(playerid, COLOR_ORANGE, "WARNING: This gives the player permission to assign donator-only features. Use with care.");
+		SendClientMessage(playerid, COLOR_WHITE, "USAGE: /setsalesmod [playerid/partofname] [1 or 0]");
+		return SendClientMessage(playerid, COLOR_ORANGE, "WARNING: This gives the player permission to assign donator-only features. Use with care.");
 	}
 	
 	if(iTargetID == INVALID_PLAYER_ID)
-	    return SendClientMessage(playerid, COLOR_GREY, "That player is offline.");
-	    
+		return SendClientMessage(playerid, COLOR_GREY, "That player is offline.");
+
 	if(iTargetID == playerid)
-	    return SendClientMessage(playerid, COLOR_GREY, "You may not use this command on yourself to avoid abuse.");
+		return SendClientMessage(playerid, COLOR_GREY, "You may not use this command on yourself to avoid abuse.");
 	
 	if(strval(iSalesMod) != 1 && strval(iSalesMod) != 0)
-	    return SendClientMessage(playerid, COLOR_WHITE, "USAGE: /setsalesmod [playerid/partofname] [1 or 0]");
-	    
+		return SendClientMessage(playerid, COLOR_WHITE, "USAGE: /setsalesmod [playerid/partofname] [1 or 0]");
+
 	if(PlayerInfo[iTargetID][pSalesTeam] == strval(iSalesMod))
 		return SendClientMessage(playerid, COLOR_GREY, "This player is already this level.");
 		
-    PlayerInfo[iTargetID][pSalesTeam] = strval(iSalesMod);
+	PlayerInfo[iTargetID][pSalesTeam] = strval(iSalesMod);
 
 	new
 		szBoolStr[9],

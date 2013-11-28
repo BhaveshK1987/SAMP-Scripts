@@ -7,35 +7,35 @@ CMD:changeplayerplates(playerid, params[]) {
 	}
 
 	if(PlayerInfo[playerid][pAdmin] < 5 && PlayerInfo[playerid][pSalesTeam] == 0)
-	    return SendClientMessage(playerid, COLOR_GRAD1, "You're not authorized to use that command!");
+		return SendClientMessage(playerid, COLOR_GRAD1, "You're not authorized to use that command!");
 
 	new
-	    iTargetID,
+		iTargetID,
 		szColor[32],
-	    szPlate[32];
+		szPlate[32];
 
 	if(sscanf(params, "us[32]s[32]", iTargetID, szColor, szPlate))
 	{
-        SendClientMessage(playerid, COLOR_WHITE, "USAGE: /changeplayerplates [playerid] [color] [new plate]");
+		SendClientMessage(playerid, COLOR_WHITE, "USAGE: /changeplayerplates [playerid] [color] [new plate]");
 		SendClientMessage(playerid, COLOR_GREY, "Available colors: {EFEFEF}default, black, white, blue, red, green, purple");
 		SendClientMessage(playerid, COLOR_GREY, "{EFEFEF}yellow, lightblue, darkgreen, darkblue, darkgrey, darkbrown, pink");
 		return true;
 	}
 	new
-	    Float: fVehicleHealth,
+		Float: fVehicleHealth,
 		iCount;
 
 	for(new d = 0 ; d < MAX_PLAYERVEHICLES; d++) {
 		if(IsPlayerInVehicle(iTargetID, PlayerVehicleInfo[iTargetID][d][pvId])) {
-		    iCount = 1;
+			iCount = 1;
 
-		    GetVehicleHealth(PlayerVehicleInfo[iTargetID][d][pvId], fVehicleHealth);
+			GetVehicleHealth(PlayerVehicleInfo[iTargetID][d][pvId], fVehicleHealth);
 
-		    if(fVehicleHealth < 800)
-		        return SendClientMessage(playerid, COLOR_GREY, "The vehicle needs to have 800 HP before you can change the plates on it.");
+			if(fVehicleHealth < 800)
+				return SendClientMessage(playerid, COLOR_GREY, "The vehicle needs to have 800 HP before you can change the plates on it.");
 
 			if(strlen(szPlate) > 12)
-			    return SendClientMessage(playerid, COLOR_GREY, "The license plate can not be longer than 12 characters!");
+				return SendClientMessage(playerid, COLOR_GREY, "The license plate can not be longer than 12 characters!");
 
 			mysql_real_escape_string(szPlate, szPlate, g_MySQLConnections[0]);
 
@@ -56,16 +56,16 @@ CMD:changeplayerplates(playerid, params[]) {
 			else if(strcmp(szColor, "pink", true)==0) format(PlayerVehicleInfo[iTargetID][d][pvNumberPlate], 32, "{FF51F1}%s", szPlate);
 			else strmid(PlayerVehicleInfo[iTargetID][d][pvNumberPlate], szPlate, 0, strlen(szPlate), 32);
 
-		    GetPlayerPos(PlayerVehicleInfo[iTargetID][d][pvId], PlayerInfo[iTargetID][pPos_x], PlayerInfo[iTargetID][pPos_y], PlayerInfo[iTargetID][pPos_z]);
-		    GetVehicleZAngle(PlayerVehicleInfo[iTargetID][d][pvId], PlayerInfo[iTargetID][pPos_r]);
+			GetPlayerPos(PlayerVehicleInfo[iTargetID][d][pvId], PlayerInfo[iTargetID][pPos_x], PlayerInfo[iTargetID][pPos_y], PlayerInfo[iTargetID][pPos_z]);
+			GetVehicleZAngle(PlayerVehicleInfo[iTargetID][d][pvId], PlayerInfo[iTargetID][pPos_r]);
 
-		    cmd_park(iTargetID, params);
-		    //UpdatePlayerVehicleParkPosition(iTargetID, PlayerVehicleInfo[iTargetID][d][pvId], PlayerInfo[iTargetID][pPos_x], PlayerInfo[iTargetID][pPos_y], PlayerInfo[iTargetID][pPos_z], PlayerInfo[iTargetID][pPos_r], 1000.0);
+			cmd_park(iTargetID, params);
+			//UpdatePlayerVehicleParkPosition(iTargetID, PlayerVehicleInfo[iTargetID][d][pvId], PlayerInfo[iTargetID][pPos_x], PlayerInfo[iTargetID][pPos_y], PlayerInfo[iTargetID][pPos_z], PlayerInfo[iTargetID][pPos_r], 1000.0);
 		}
 	}
 
 	if(iCount != 1)
-	    return SendClientMessage(playerid, COLOR_GREY, "The player needs to be in the car to have its number plate modified.");
+		return SendClientMessage(playerid, COLOR_GREY, "The player needs to be in the car to have its number plate modified.");
 
 	return true;
 }

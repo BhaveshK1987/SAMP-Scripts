@@ -13,4 +13,4 @@ if(PlayerInfo[playerid][pAdmin] >= 5 || PlayerInfo[playerid][pSalesTeam] == 1)
 admin level check to this */
 
 if(PlayerInfo[playerid][pAdmin] < 5 && PlayerInfo[playerid][pSalesTeam] == 0)
-    return SendClientMessage(playerid, COLOR_GREY, "You're not allowed to use this command.");
+	return SendClientMessage(playerid, COLOR_GREY, "You're not allowed to use this command.");
