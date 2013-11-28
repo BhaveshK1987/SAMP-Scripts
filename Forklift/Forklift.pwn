@@ -38,7 +38,7 @@ new
 		{2637.2166,-2094.3455,13.1146}
 	},
 	Float:g_aForkliftSpawn[MAX_BOXES][3] = { //More boxes? Add more forklift spawn coordinates.
-	    {2458.0894,-2118.7822,13.3103},
+		{2458.0894,-2118.7822,13.3103},
 		{2460.5295,-2118.7822,13.3103},
 		{2463.1433,-2118.7822,13.3104},
 		{2481.8218,-2118.7822,13.3107},
@@ -70,8 +70,8 @@ public OnFilterScriptInit() {
 		}
 	}
 	for(new iForkliftID; iForkliftID < MAX_BOXES; iForkliftID++) {
-	    g_iForkliftID[iForkliftID] = CreateVehicle(FORKLIFT, g_fForkliftSpace[iForkliftID], 0.0, 6, 0, 300000);
-	    g_iForkliftTruckNumber[g_iForkliftID[iForkliftID]] = iForkliftID; // Used for setting checkpoint to load the box unique to each forklift.
+		g_iForkliftID[iForkliftID] = CreateVehicle(FORKLIFT, g_fForkliftSpace[iForkliftID], 0.0, 6, 0, 300000);
+		g_iForkliftTruckNumber[g_iForkliftID[iForkliftID]] = iForkliftID; // Used for setting checkpoint to load the box unique to each forklift.
 	}
 	CreateDynamicPickup(1239, 1, 2424.3030,-2098.8564,13.7151, -1, -1, -1, 100.0); //
 	CreateDynamicObject(3258,2429.9360400,-2122.1701700,12.1875000,356.8584000,0.0000000,3.1415900); //
@@ -144,17 +144,17 @@ public OnFilterScriptExit() {
 }
 
 public OnPlayerUpdate(playerid) {
-    new Float:fX, Float:fY, Float:fZ;
+	new Float:fX, Float:fY, Float:fZ;
 	GetPlayerPos(playerid, fX, fY, fZ);
 	if(g_bIsPlayerForklifting[playerid] == true) {
 		if(fX < 2423.9375) {
-            SetVehicleToRespawn(GetPlayerVehicleID(playerid));
-      		DestroyDynamicObject(g_iBoxObjID[g_iPlayerBoxID[playerid]]);
-      		DisablePlayerCheckpoint(playerid);
-      		g_bCollectingBox[playerid] = false;
-      		g_iPlayerBoxID[playerid] = -1;
-      		g_bIsPlayerForklifting[playerid] = false;
-      		SendClientMessage(playerid, GREY, "* You are not allowed outside the Fossil Fuel Company grounds! Your forklift was returned.");
+			SetVehicleToRespawn(GetPlayerVehicleID(playerid));
+	  		DestroyDynamicObject(g_iBoxObjID[g_iPlayerBoxID[playerid]]);
+	  		DisablePlayerCheckpoint(playerid);
+	  		g_bCollectingBox[playerid] = false;
+	  		g_iPlayerBoxID[playerid] = -1;
+	  		g_bIsPlayerForklifting[playerid] = false;
+	  		SendClientMessage(playerid, GREY, "* You are not allowed outside the Fossil Fuel Company grounds! Your forklift was returned.");
 		}
 	}
 	return 1;
@@ -188,14 +188,14 @@ public OnPlayerEnterVehicle(playerid, vehicleid, ispassenger) {
 }
 
 public OnPlayerExitVehicle(playerid, vehicleid) {
-    if(g_bIsPlayerForklifting[playerid] == true) {
+	if(g_bIsPlayerForklifting[playerid] == true) {
 		if(IsAForklifter(vehicleid)) {
-      		SetVehicleToRespawn(vehicleid);
-      		DestroyDynamicObject(g_iBoxObjID[g_iPlayerBoxID[playerid]]);
-      		DisablePlayerCheckpoint(playerid);
-      		g_bCollectingBox[playerid] = false;
-      		g_iPlayerBoxID[playerid] = -1;
-      		g_bIsPlayerForklifting[playerid] = false;
+	  		SetVehicleToRespawn(vehicleid);
+	  		DestroyDynamicObject(g_iBoxObjID[g_iPlayerBoxID[playerid]]);
+	  		DisablePlayerCheckpoint(playerid);
+	  		g_bCollectingBox[playerid] = false;
+	  		g_iPlayerBoxID[playerid] = -1;
+	  		g_bIsPlayerForklifting[playerid] = false;
 		}
 	}
 	return 1;
@@ -204,14 +204,14 @@ public OnPlayerExitVehicle(playerid, vehicleid) {
 public OnPlayerEnterCheckpoint(playerid) {
 	if(g_bIsPlayerForklifting[playerid] == true) {
 		if(IsAForklifter(GetPlayerVehicleID(playerid))) {
-      		new iBoxID = g_iPlayerBoxID[playerid];
+	  		new iBoxID = g_iPlayerBoxID[playerid];
 			if(g_bCollectingBox[playerid] == true) {
-                GetObjectPos(g_iBoxObjID[iBoxID], g_fBoxPos[iBoxID][0], g_fBoxPos[iBoxID][1], g_fBoxPos[iBoxID][2]);
+				GetObjectPos(g_iBoxObjID[iBoxID], g_fBoxPos[iBoxID][0], g_fBoxPos[iBoxID][1], g_fBoxPos[iBoxID][2]);
 				if(IsPlayerInRangeOfPoint(playerid, 10.0, g_fBoxPos[iBoxID][0], g_fBoxPos[iBoxID][1], g_fBoxPos[iBoxID][2])) {
-				    AttachObjectToVehicle(g_iBoxObjID[iBoxID], GetPlayerVehicleID(playerid), 0.000000,0.599999,0.449999,0.000000,0.000000,0.000000);
+					AttachObjectToVehicle(g_iBoxObjID[iBoxID], GetPlayerVehicleID(playerid), 0.000000,0.599999,0.449999,0.000000,0.000000,0.000000);
 					SendClientMessage(playerid, LIGHTBLUE, "* Lift up your box using your truck's forks! Use {00AA00}NumPad8{33CCFF} and {FFAA00}NumPad2{33CCFF} (default) to operate the forks.");
-				    SendClientMessage(playerid, LIGHTBLUE, "* When you've done that, go drop off your box for some great American dollar!");
-				    DisablePlayerCheckpoint(playerid);
+					SendClientMessage(playerid, LIGHTBLUE, "* When you've done that, go drop off your box for some great American dollar!");
+					DisablePlayerCheckpoint(playerid);
 					g_bCollectingBox[playerid] = false;
 					SetPlayerCheckpoint(playerid, g_fForkliftSpace[g_iForkliftTruckNumber[GetPlayerVehicleID(playerid)]], 5.0);
 				}
@@ -219,7 +219,7 @@ public OnPlayerEnterCheckpoint(playerid) {
 					return SendClientMessage(playerid, GREY, "* Something went wrong. Post a bug report or try again! {00AA00}(Bug report info: Collecting)");
 			}
 			else {
-			    if(IsPlayerInRangeOfPoint(playerid, 7.0, g_fForkliftSpace[g_iForkliftTruckNumber[GetPlayerVehicleID(playerid)]]) == 0) {
+				if(IsPlayerInRangeOfPoint(playerid, 7.0, g_fForkliftSpace[g_iForkliftTruckNumber[GetPlayerVehicleID(playerid)]]) == 0) {
 					return SendClientMessage(playerid, GREY, "* Something went wrong. Post a bug report or try again! {00AA00}(Bug report info: Dropping off)");
 				}
 				if(IsValidObject(g_iBoxObjID[iBoxID])) {
@@ -239,20 +239,20 @@ public OnPlayerEnterCheckpoint(playerid) {
 					g_fBoxPos[iBoxID][2] = 0.0;
 					g_iPlayerBoxID[playerid] = -1;
 					for(new iPlayer; iPlayer < MAX_PLAYERS; iPlayer++) {
-					    if(iPlayer != playerid)
-					    {
+						if(iPlayer != playerid)
+						{
 							if(!IsPlayerConnected(iPlayer))
 								break;
 							if(g_iPlayerBoxID[iPlayer] == iBoxID) {
 								SendClientMessage(iPlayer, GREY, "* Your box was already dropped off - post a bug report!");
 								DisablePlayerCheckpoint(iPlayer);
 								if(NextAvailableBox(iBoxID) == 0) {
-								    SetVehicleToRespawn(GetPlayerVehicleID(iPlayer));
-						      		DestroyDynamicObject(g_iBoxObjID[g_iPlayerBoxID[iPlayer]]);
-						      		DisablePlayerCheckpoint(iPlayer);
-						      		g_bCollectingBox[iPlayer] = false;
-						      		g_iPlayerBoxID[iPlayer] = -1;
-						      		g_bIsPlayerForklifting[iPlayer] = false;
+									SetVehicleToRespawn(GetPlayerVehicleID(iPlayer));
+							  		DestroyDynamicObject(g_iBoxObjID[g_iPlayerBoxID[iPlayer]]);
+							  		DisablePlayerCheckpoint(iPlayer);
+							  		g_bCollectingBox[iPlayer] = false;
+							  		g_iPlayerBoxID[iPlayer] = -1;
+							  		g_bIsPlayerForklifting[iPlayer] = false;
 									return SendClientMessage(iPlayer, GREY, "* There are no available boxes!");
 								}
 								SendClientMessage(iPlayer, LIGHTBLUE, "* The next box that needs moving has been highlighted on your GPS.");
@@ -264,11 +264,11 @@ public OnPlayerEnterCheckpoint(playerid) {
 					DisablePlayerCheckpoint(playerid);
 					if(NextAvailableBox(iBoxID) == 0) {
 						SetVehicleToRespawn(GetPlayerVehicleID(playerid));
-			      		DestroyDynamicObject(g_iBoxObjID[g_iPlayerBoxID[playerid]]);
-			      		DisablePlayerCheckpoint(playerid);
-			      		g_bCollectingBox[playerid] = false;
-			      		g_iPlayerBoxID[playerid] = -1;
-			      		g_bIsPlayerForklifting[playerid] = false;
+				  		DestroyDynamicObject(g_iBoxObjID[g_iPlayerBoxID[playerid]]);
+				  		DisablePlayerCheckpoint(playerid);
+				  		g_bCollectingBox[playerid] = false;
+				  		g_iPlayerBoxID[playerid] = -1;
+				  		g_bIsPlayerForklifting[playerid] = false;
 				  		return SendClientMessage(playerid, GREY, "* There are no available boxes! (20/20 used)");
 					}
 					SendClientMessage(playerid, LIGHTBLUE, "* The next box that needs moving has been highlighted on your GPS.");
@@ -277,28 +277,28 @@ public OnPlayerEnterCheckpoint(playerid) {
 					g_bCollectingBox[playerid] = true;
 					g_iPlayerForkliftSkill[playerid] ++;
 					if(g_iPlayerForkliftSkill[playerid] == 50) { // 50 points
-					    g_iPlayerForkliftLevel[playerid] = 2;
-					    SendClientMessage(playerid, 0xFFFF00AA, "* Your forklifting skill is now level 2. Your maximum pay went up from $400 to $800!");
-					    SendClientMessage(playerid, 0xFFFF00AA, "* You also now get 10%% extra materials from your packages! (275 per package)");
-					    g_fMaterialsMultiplier[playerid] = 1.1;
+						g_iPlayerForkliftLevel[playerid] = 2;
+						SendClientMessage(playerid, 0xFFFF00AA, "* Your forklifting skill is now level 2. Your maximum pay went up from $400 to $800!");
+						SendClientMessage(playerid, 0xFFFF00AA, "* You also now get 10%% extra materials from your packages! (275 per package)");
+						g_fMaterialsMultiplier[playerid] = 1.1;
 					}
 					else if(g_iPlayerForkliftSkill[playerid] == 125) { // 75 points
-					    g_iPlayerForkliftLevel[playerid] = 3;
-					    SendClientMessage(playerid, 0xFFFF00AA, "* Your forklifting skill is now level 3. Your maximum pay went up from $800 to $1200!");
-					    SendClientMessage(playerid, 0xFFFF00AA, "* You also now get 20%% extra materials from your packages! (300 per package)");
-					    g_fMaterialsMultiplier[playerid] = 1.2;
+						g_iPlayerForkliftLevel[playerid] = 3;
+						SendClientMessage(playerid, 0xFFFF00AA, "* Your forklifting skill is now level 3. Your maximum pay went up from $800 to $1200!");
+						SendClientMessage(playerid, 0xFFFF00AA, "* You also now get 20%% extra materials from your packages! (300 per package)");
+						g_fMaterialsMultiplier[playerid] = 1.2;
 					}
 					else if(g_iPlayerForkliftSkill[playerid] == 225) { // 100 points
-					    g_iPlayerForkliftLevel[playerid] = 4;
-					    SendClientMessage(playerid, 0xFFFF00AA, "* Your forklifting skill is now level 4. Your maximum pay went up from $1200 to $1600!");
-					    SendClientMessage(playerid, 0xFFFF00AA, "* You also now get 30%% extra materials from your packages! (325 per package)");
-					    g_fMaterialsMultiplier[playerid] = 1.3;
+						g_iPlayerForkliftLevel[playerid] = 4;
+						SendClientMessage(playerid, 0xFFFF00AA, "* Your forklifting skill is now level 4. Your maximum pay went up from $1200 to $1600!");
+						SendClientMessage(playerid, 0xFFFF00AA, "* You also now get 30%% extra materials from your packages! (325 per package)");
+						g_fMaterialsMultiplier[playerid] = 1.3;
 					}
 					else if(g_iPlayerForkliftSkill[playerid] == 350) { // 125 points
-					    g_iPlayerForkliftLevel[playerid] = 5;
-					    SendClientMessage(playerid, 0xFFFF00AA, "* Your forklifting skill is now level 5. Your maximum pay went up from $1600 to $2000!");
-					    SendClientMessage(playerid, 0xFFFF00AA, "* You also now get 50%% extra materials from your packages! (375 per package)");
-					    g_fMaterialsMultiplier[playerid] = 1.5;
+						g_iPlayerForkliftLevel[playerid] = 5;
+						SendClientMessage(playerid, 0xFFFF00AA, "* Your forklifting skill is now level 5. Your maximum pay went up from $1600 to $2000!");
+						SendClientMessage(playerid, 0xFFFF00AA, "* You also now get 50%% extra materials from your packages! (375 per package)");
+						g_fMaterialsMultiplier[playerid] = 1.5;
 					}
 				}
 				else
@@ -318,7 +318,7 @@ stock IsAForklifter(iVehicleID) {
 		if(g_iForkliftID[iForkliftID] == iVehicleID)
 			return true;
 		else
-		    continue;
+			continue;
 	}
 	return false;
 }
@@ -326,12 +326,12 @@ stock IsAForklifter(iVehicleID) {
 public OnPlayerCommandText(playerid, cmdtext[])
 {
 	/*if(!strcmp(cmdtext, "/join", true)) {
-	    if(IsPlayerInRangeOfPoint(playerid, 5.0, 2424.3030,-2098.8564,13.7151)) {
+		if(IsPlayerInRangeOfPoint(playerid, 5.0, 2424.3030,-2098.8564,13.7151)) {
 			SendClientMessage(playerid, LIGHTBLUE, "* Congratulations on your new job as a Forklifter!");
 			return SetPVarInt(playerid, "pJob", 25);
 		}
 		else
-		    return SendClientMessage(playerid, GREY, "* You are not close enough to a job join point!");
+			return SendClientMessage(playerid, GREY, "* You are not close enough to a job join point!");
 	}*/
 	return 0;
 }
