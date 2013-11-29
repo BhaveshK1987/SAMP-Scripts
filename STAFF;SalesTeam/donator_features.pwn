@@ -1,5 +1,5 @@
 /* Change commands of:
-	donators -> donators, setdonator, give boombox, give mp3
+	donators -> donators, setdonator, give boombox, give mp3, set double xp
 	businesses -> createbusiness, editbusiness
 	lands -> create land, edit land
 admin level check to this */
