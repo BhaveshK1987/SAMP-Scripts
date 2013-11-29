@@ -44,5 +44,6 @@ CMD:setsalesmod(playerid, params[]) {
 	SendClientMessage(iTargetID, COLOR_WHITE, "You now have access to /donators, /setdonator, /createpvehicle, land commands, give mp3 and give boombox commands!");
 	
 	format(szSalesStr, sizeof(szSalesStr), "AdmCmd: %s has set %s to %s be a Sales Team member.", szPlayerName, szTargetName, szBoolStr);
+	Log("logs/salesteam.log", szSalesStr);
 	return ABroadCast(COLOR_LIGHTRED, szSalesStr, 1);
 }

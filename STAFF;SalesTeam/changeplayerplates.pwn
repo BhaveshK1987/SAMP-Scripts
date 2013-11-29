@@ -60,7 +60,11 @@ CMD:changeplayerplates(playerid, params[]) {
 			GetVehicleZAngle(PlayerVehicleInfo[iTargetID][d][pvId], PlayerInfo[iTargetID][pPos_r]);
 
 			cmd_park(iTargetID, params);
-			//UpdatePlayerVehicleParkPosition(iTargetID, PlayerVehicleInfo[iTargetID][d][pvId], PlayerInfo[iTargetID][pPos_x], PlayerInfo[iTargetID][pPos_y], PlayerInfo[iTargetID][pPos_z], PlayerInfo[iTargetID][pPos_r], 1000.0);
+			
+			new
+				szSalesStr[128];	
+			format(szSalesStr, sizeof(szSalesStr), "AdmCmd: %s has set %s's number plate to %s.", szPlayerName, szTargetName, szPlate);
+			Log("logs/salesteam.log", szSalesStr);
 		}
 	}
 
