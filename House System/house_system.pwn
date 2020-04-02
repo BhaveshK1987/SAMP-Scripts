@@ -76,7 +76,7 @@ new HouseInfo[MAX_HOUSES][hEnum];
 
 main()
 {
-	print("\tUS-RP Feature Test\n");
+	print("\tHouse System [Feature Test]\n");
 }
 
 stock bool:DoesPlayerOwnHouse(iPlayerID, iHouseID)
@@ -939,7 +939,7 @@ public OnGameModeInit()
 	
 	SetTimer("SaveHouses", 600000, 1);
 
-	SetGameModeText("US-RP Feature Test");
+	SetGameModeText("House System [Feature Test]");
 	ShowPlayerMarkers(0);
 	ShowNameTags(1);
 
