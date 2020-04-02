@@ -209,6 +209,7 @@ public OnPlayerDeath(playerid, killerid, reason)
 	if(g_Team[playerid] == TEAM_POLICE)
 	{
 		GameTextForPlayer(killerid, "~h~+150", 5, 1000);
+		PlayerInfo[killerid][pScore] += 50;
 	}
 	if(g_Team[playerid] == TEAM_CRIMINAL)
 	{
